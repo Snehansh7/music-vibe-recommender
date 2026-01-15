@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'honey': { 50: '#fef5e7', 100: '#fcebcf', 200: '#f9d79f', 300: '#f7c26e', 400: '#f4ae3e', 500: '#f19a0e', 600: '#c17b0b', 700: '#915c08', 800: '#603e06', 900: '#301f03', 950: '#221602' },
+                        'linen': { 50: '#faf2eb', 100: '#f4e6d7', 200: '#e9cdaf', 300: '#deb487', 400: '#d39b5f', 500: '#c88237', 600: '#a0682c', 700: '#784e21', 800: '#503416', 900: '#281a0b', 950: '#1c1208' },
+                        'rose': { 50: '#fbece9', 100: '#f8d8d3', 200: '#f0b1a8', 300: '#e98b7c', 400: '#e16451', 500: '#da3d25', 600: '#ae311e', 700: '#832516', 800: '#57180f', 900: '#2c0c07', 950: '#1f0905' },
+                        'teal': { 50: '#f0f4f3', 100: '#e2e9e7', 200: '#c4d4d0', 300: '#a7be b8', 400: '#8aa8a1', 500: '#6c9389', 600: '#57756e', 700: '#415852', 800: '#2b3b37', 900: '#161d1b', 950: '#0f1513' },
+                        'coral': { 50: '#fde8e8', 100: '#fad2d1', 200: '#f5a4a3', 300: '#f07775', 400: '#ec4946', 500: '#e71c18', 600: '#b91613', 700: '#8a110f', 800: '#5c0b0a', 900: '#2e0605', 950: '#200403' }
+                    }
+                }
+            }
+        }
+    </script>
+    <title>VibeGen | Earth Tones</title>
+    <style>
+        .album-container { perspective: 1000px; position: relative; width: 8rem; height: 8rem; }
+        .vinyl-disc { transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 10; position: absolute; inset: 0; }
+        .album-cover { z-index: 20; position: relative; box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5); }
+        .group:hover .vinyl-disc { transform: translateX(50%) rotate(180deg); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-linen-950 text-linen-100 min-h-screen flex items-center justify-center p-6 font-sans">
+
+    <div class="bg-linen-900 max-w-2xl w-full p-10 rounded-[2.5rem] border border-linen-800 shadow-2xl">
+        <header class="mb-10 text-center">
+            <h1 class="text-5xl font-black tracking-tighter text-honey-400">VIBE<span class="text-rose-500">GEN</span></h1>
+            <p class="text-teal-400 font-bold mt-2 uppercase tracking-[0.3em] text-[10px]">Acoustic AI Intelligence</p>
+        </header>
+
+        <div class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-[10px] font-black text-teal-300 mb-2 uppercase tracking-widest">Select Genre</label>
+                    <select id="genre" class="w-full p-4 rounded-2xl bg-linen-950 border border-teal-800 text-linen-100 focus:border-honey-500 outline-none transition-all">
+                        <option value="">Any Genre</option>
+                        <option value="HipHop">Hip Hop</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Jazz">Jazz</option>
+                        <option value="Rock">Rock</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-teal-300 mb-2 uppercase tracking-widest">Reach</label>
+                    <select id="streams" class="w-full p-4 rounded-2xl bg-linen-950 border border-teal-800 text-linen-100 focus:border-honey-500 outline-none transition-all">
+                        <option value="">Any Reach</option>
+                        <option value="Underground Gems">Underground Gems</option>
+                        <option value="Rising Stars">Rising Stars</option>
+                        <option value="Global Icons">Global Icons</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-[10px] font-black text-teal-300 mb-2 uppercase tracking-widest">Sonic Energy</label>
+                    <select id="energy" class="w-full p-4 rounded-2xl bg-linen-950 border border-teal-800 text-linen-100 focus:border-honey-500 outline-none transition-all">
+                        <option value="">Any Energy</option>
+                        <option value="Low / Somber">Low / Somber</option>
+                        <option value="Mid-Tempo Groove">Mid-Tempo Groove</option>
+                        <option value="High / Electric">High / Electric</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-teal-300 mb-2 uppercase tracking-widest">Emotional Hue</label>
+                    <select id="mood" class="w-full p-4 rounded-2xl bg-linen-950 border border-teal-800 text-linen-100 focus:border-honey-500 outline-none transition-all">
+                        <option value="">Any Mood</option>
+                        <option value="Golden & Warm">Golden & Warm</option>
+                        <option value="Misty & Melancholic">Misty & Melancholic</option>
+                        <option value="Raw & Intense">Raw & Intense</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="generateMusic()" class="w-full py-5 bg-honey-500 hover:bg-rose-500 text-linen-950 rounded-2xl font-black uppercase tracking-tighter text-lg transition-all active:scale-[0.97] shadow-lg shadow-honey-900/40">
+                Curate My Sound
+            </button>
+        </div>
+
+        <div id="loading" class="hidden mt-10 text-center text-rose-400 text-xs font-bold tracking-widest uppercase animate-pulse">
+            Mixing the frequencies...
+        </div>
+        
+        <div id="results" class="mt-10 space-y-8"></div>
+    </div>
+ 
+    <script>
+        async function generateMusic() {
+            const resultsDiv = document.getElementById('results');
+            const loading = document.getElementById('loading');
+            
+            // 1. Reset UI
+            resultsDiv.innerHTML = '';
+            loading.classList.remove('hidden');
+
+            const payload = {
+                genre: document.getElementById('genre').value || "any",
+                streams: document.getElementById('streams').value || "any",
+                energy: document.getElementById('energy').value || "any",
+                mood: document.getElementById('mood').value || "any"
+            };
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                loading.classList.add('hidden');
+
+                if (data.recommendations && Array.isArray(data.recommendations)) {
+                    // Using for...of loop to handle async image fetching correctly
+                    for (const song of data.recommendations) {
+                        const queryText = `${song.title} ${song.artist}`;
+                        const encodedQuery = encodeURIComponent(queryText);
+                        
+                        // Fixed Spotify Link
+                        const spotifyUrl = `https://open.spotify.com/search/${encodedQuery}`;
+
+                        // --- FETCH IMAGE ---
+                        let imageUrl = "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=300"; 
+                        try {
+                            const imgRes = await fetch(`https://itunes.apple.com/search?term=${encodedQuery}&entity=song&limit=1`);
+                            const imgData = await imgRes.json();
+                            if (imgData.results && imgData.results.length > 0) {
+                                // Get a higher resolution version of the artwork
+                                imageUrl = imgData.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+                            }
+                        } catch (e) {
+                            console.warn("iTunes cover fetch failed for:", queryText);
+                        }
+
+                        const card = document.createElement('div');
+                        card.className = "group relative flex items-center mb-12 last:mb-0 animate-fadeIn";
+                        
+                        card.innerHTML = `
+                            <div class="relative w-32 h-32 flex-shrink-0 album-container cursor-pointer">
+                                <div class="vinyl-disc absolute inset-0 bg-zinc-950 rounded-full border-4 border-zinc-800 shadow-xl flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full border border-zinc-800 bg-honey-500/20 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-linen-900 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <img src="${imageUrl}" class="album-cover w-full h-full object-cover rounded-lg shadow-2xl border border-linen-800/50" alt="Cover Art">
+                            </div>
+
+                            <div class="ml-12 flex-grow bg-linen-900/40 p-6 rounded-2xl border border-teal-900/20 backdrop-blur-sm">
+                                <div class="flex justify-between items-start">
+                                    <div class="pr-4">
+                                        <h3 class="text-honey-400 font-black text-xl leading-tight">${song.title}</h3>
+                                        <p class="text-teal-400 font-bold text-xs uppercase tracking-[0.2em] mt-2">${song.artist}</p>
+                                    </div>
+                                    <a href="${spotifyUrl}" target="_blank" class="flex-shrink-0 p-2 bg-teal-500/10 hover:bg-teal-500/30 rounded-full transition-colors group/icon">
+                                        <svg class="w-6 h-6 text-teal-400 group-hover/icon:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.491 17.293c-.213.351-.667.464-1.018.251-2.821-1.724-6.372-2.114-10.554-1.161-.401.091-.803-.16-.893-.561-.09-.4.16-.803.561-.893 4.582-1.047 8.509-.603 11.654 1.317.351.213.464.667.25 1.047zm1.464-3.259c-.269.438-.842.576-1.28.307-3.23-1.985-8.151-2.56-11.969-1.402-.495.15-1.022-.128-1.171-.623-.15-.495.128-1.022.623-1.171 4.364-1.324 9.8-0.669 13.51 1.613.438.269.576.842.307 1.28zm.139-3.418C15.529 8.521 9.619 8.324 6.183 9.366c-.563.171-1.163-.148-1.334-.711-.171-.563.148-1.163.711-1.334 4.004-1.215 10.534-0.988 14.654 1.458.506.3.67 0.954.37 1.46-.3.506-.954.67-1.46.37z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <p class="text-linen-400 mt-4 italic text-xs leading-relaxed border-l-2 border-rose-900/50 pl-4">${song.vibe_desc}</p>
+                            </div>
+                        `;
+                        resultsDiv.appendChild(card);
+                    }
+                }
+            } catch (err) {
+                loading.classList.add('hidden');
+                console.error("Full Error Info:", err);
+                resultsDiv.innerHTML = `<p class="text-rose-500 font-bold text-center">Transmission Error: ${err.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
